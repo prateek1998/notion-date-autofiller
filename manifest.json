@@ -1,10 +1,12 @@
 {
+  "manifest_version": 3,
   "name": "Notion Date Filler",
-  "description": "This Extension helps you to autofill the date in your notion database.",
-  "version": "1.0",
-  "manifest_version": 2,
-  "permissions": ["activeTab"],
-  "browser_action": {
+  "description": "This Extension helps you to autofill the date in your Notion database.",
+  "version": "1.0.1",
+  "permissions": [
+    "activeTab"
+  ],
+  "action": {
     "default_popup": "popup.html",
     "default_icon": {
       "16": "/images/calendar-16.png",
