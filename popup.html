@@ -10,18 +10,34 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="./popup.css" />
+  <style>
+    /* Custom CSS for checkbox alignment */
+    .form-check-inline .form-check-input {
+      margin-top: 0;
+      margin-right: 5px;
+    }
+
+    .form-check-inline .form-check-label {
+      margin-bottom: 0;
+      font-size: 14px; /* Adjust size if needed */
+    }
+
+    .btn-group .btn {
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
   <div class="modal-header">
     <h1 class="logo">
-      <img class="logo-icon" src="images/notion.jpg" />Notion Date AutoFiller
-      <span class="version">(1.0.0)</span>
+      <img class="logo-icon" src="images/notion.jpg" alt="Notion Logo" /> Notion Date AutoFiller
+      <span class="version">(1.0.1)</span>
     </h1>
   </div>
   <div class="alert alert-success" id="success-alert">
     <button type="button" class="close" data-dismiss="alert">x</button>
-    <strong>Success! </strong> Date Successfully Copied.
+    <strong>Success!</strong> Date Successfully Copied.
   </div>
   <div class="alert alert-success collapse" id="successcopy" role="alert">
     A simple success alert—check it out!
@@ -31,43 +47,80 @@
   </div>
   <div class="modal-icons">
     <form>
+      <!-- Start Date and End Date -->
       <div class="form-row">
         <div class="col form-group col-md-6">
           <label for="startDate">Start Date</label>
           <input type="date" class="form-control" id="startDate">
         </div>
-        <div class="col form-group  col-md-6">
+        <div class="col form-group col-md-6">
           <label for="endDate">End Date</label>
           <input type="date" class="form-control" id="endDate">
         </div>
       </div>
       <div class="form-group d-flex flex-column col-md-6">
-        <label class="text-muted">Or Choose dates using this buttons...</label>
+        <label class="text-muted">Or Choose dates using these buttons...</label>
         <div class="btn-group" id="datesBtnGroup" aria-label="Basic example">
           <button type="button" class="btn btn-primary" value="week">Weekly</button>
           <button type="button" class="btn btn-primary active " value="month">Monthly</button>
           <button type="button" class="btn btn-primary" value="year">Yearly</button>
         </div>
       </div>
-      <div class="form-row col-md-6">
-        <div class="col form-group col-md-6">
-          <button id="btnSubmit" type="button" class="btn btn-block btn-success ">Copy</button>
+      <!-- Exclude Days Section -->
+      <div class="exclude-days col-md-12">
+        <label>Exclude Specific Days:</label>
+        <div class="d-flex flex-wrap">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input exclude-day" type="checkbox" id="excludeSunday" value="0">
+            <label class="form-check-label" for="excludeSunday">Sunday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input exclude-day" type="checkbox" id="excludeMonday" value="1">
+            <label class="form-check-label" for="excludeMonday">Monday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input exclude-day" type="checkbox" id="excludeTuesday" value="2">
+            <label class="form-check-label" for="excludeTuesday">Tuesday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input exclude-day" type="checkbox" id="excludeWednesday" value="3">
+            <label class="form-check-label" for="excludeWednesday">Wednesday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input exclude-day" type="checkbox" id="excludeThursday" value="4">
+            <label class="form-check-label" for="excludeThursday">Thursday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input exclude-day" type="checkbox" id="excludeFriday" value="5">
+            <label class="form-check-label" for="excludeFriday">Friday</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input exclude-day" type="checkbox" id="excludeSaturday" value="6">
+            <label class="form-check-label" for="excludeSaturday">Saturday</label>
+          </div>
         </div>
-        <div class="col form-group  col-md-6">
+      </div>
+      <!-- Submit and Reset Buttons -->
+      <div class="form-row mt-2 col-md-6">
+        <div class="col form-group col-md-6">
+          <button id="btnSubmit" type="button" class="btn btn-block btn-success">Copy</button>
+        </div>
+        <div class="col form-group col-md-6">
           <button id="btnReset" type="button" class="btn btn-block btn-danger">Reset</button>
         </div>
       </div>
+      <!-- Donate Button -->
       <div class="mb-3">
         <a target="_blank" href="https://www.buymeacoffee.com/pratiiksaini">
-        <button id="btnSubmit" type="button" class="btn btn-block btn-warning ">Donate Us</button>
-      </a>
+          <button type="button" class="btn btn-block btn-warning">Donate Us</button>
+        </a>
       </div>
+    </form>
   </div>
   <script src="./scripts/jquery.min.js"></script>
   <script src="./scripts/popper.min.js"></script>
   <script src="./scripts/bootstrap.min.js"></script>
   <script src="./scripts/popup.js"></script>
-  
 </body>
 
 </html>

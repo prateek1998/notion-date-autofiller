@@ -18,13 +18,23 @@ function changeToYear() {
   startDate.value = new Date(currentDate.getFullYear(), 0, 2).toISOString().substring(0, 10);
   endDate.value = new Date(currentDate.getFullYear(), 12, 1).toISOString().substring(0, 10);
 }
+
 //method to get dates array
 function getDaysArray(start, end) {
-  for (var arr = [], dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
-    arr.push(new Date(dt));
+  let excludedDays = Array.from(
+    document.querySelectorAll(".exclude-day:checked")
+  ).map((checkbox) => parseInt(checkbox.value)); // Get excluded days from checkboxes
+
+  let arr = [];
+  for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+    if (!excludedDays.includes(dt.getDay())) {
+      // Exclude the specified days
+      arr.push(new Date(dt));
+    }
   }
   return arr;
 }
+
 //method to format the date string
 function formatDate(date) {
   date = new Date(date);
@@ -33,6 +43,7 @@ function formatDate(date) {
   var year = String(date.getFullYear());
   return month + "/" + day + "/" + year;
 }
+
 //function to copy the element 
 function copyElData(elToBeCopied) {
   let range, sel;
@@ -54,6 +65,7 @@ function copyElData(elToBeCopied) {
   sel.removeAllRanges();
   console.log("Element Copied! Paste it in a file");
 };
+
 $(document).ready(function () {
   $("#success-alert").hide();
   // Get click event, assign button to var, and get values from that var
@@ -76,6 +88,7 @@ $(document).ready(function () {
         break;
     }
   });
+  
   //function for copy button
   $("#btnSubmit").click(function () {
     var datesTobeInserted = [];
@@ -105,12 +118,13 @@ $(document).ready(function () {
     elTable.parentNode.removeChild(elTable);
     // elTable.style.display = "none";
   });
+
   //function for reset button
   $("#btnReset").click(function () {
     $('#datesBtnGroup button[value="month"]').click();
+    $(".exclude-day").prop("checked", false); // Uncheck all exclude-day checkboxes
   });
 
-  // I am using this to set default value
-  // It will fire above click event which will do the updates.
-  $('#datesBtnGroup button[value="month"]').click();
+  // Set default value
+  $("#datesBtnGroup button[value='month']").click();
 });
