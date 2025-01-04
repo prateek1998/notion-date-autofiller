@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Notion Date Filler",
   "description": "This Extension helps you to autofill the date in your Notion database.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "permissions": [
     "activeTab"
   ],
