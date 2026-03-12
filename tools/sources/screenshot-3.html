@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Screenshot 3 – Payment Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px; height: 800px; overflow: hidden;
+    background: #fafafa;
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 80% 20%, rgba(22,163,74,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 400px at 10% 80%, rgba(22,163,74,0.05) 0%, transparent 70%);
+  }
+  .layout {
+    display: flex; align-items: center; gap: 70px;
+    position: relative; z-index: 1;
+  }
+
+  /* Left copy */
+  .copy { max-width: 420px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #dcfce7; color: #16a34a;
+    font-size: 11px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; padding: 5px 12px;
+    border-radius: 99px; margin-bottom: 24px;
+    border: 1px solid #bbf7d0;
+  }
+  .headline {
+    font-family: 'Syne', sans-serif;
+    font-size: 42px; font-weight: 800; line-height: 1.1;
+    color: #18181b; letter-spacing: -1px; margin-bottom: 18px;
+  }
+  .headline span { color: #16a34a; }
+  .sub { font-size: 14px; color: #52525b; line-height: 1.7; margin-bottom: 28px; }
+  .examples { display: flex; flex-direction: column; gap: 8px; }
+  .example {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 1px solid #e2e2ea;
+    border-radius: 10px; padding: 12px 16px;
+  }
+  .ex-day {
+    font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+    color: #16a34a; min-width: 36px;
+  }
+  .ex-info { font-size: 12px; }
+  .ex-label { color: #18181b; font-weight: 500; margin-bottom: 2px; }
+  .ex-dates { color: #8b8b9e; font-size: 11px; }
+
+  /* Popup */
+  .popup {
+    width: 360px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.05);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .p-header {
+    padding: 15px 18px 13px;
+    border-bottom: 1px solid #e2e2ea;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative;
+  }
+  .p-header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #16a34a, rgba(22,163,74,0.1));
+  }
+  .p-logo-row { display: flex; align-items: center; gap: 10px; }
+  .p-logo-icon {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: #18181b; display: flex; align-items: center; justify-content: center;
+    color: white; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 14px;
+  }
+  .p-logo-text { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; color: #18181b; }
+  .p-version { font-size: 10px; color: #8b8b9e; }
+  .p-theme-btn {
+    width: 32px; height: 32px; border-radius: 7px;
+    border: 1px solid #e2e2ea; background: #f3f3f6;
+    display: flex; align-items: center; justify-content: center; font-size: 13px;
+  }
+  .p-main { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 15px; }
+  .p-label { font-size: 9px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #8b8b9e; margin-bottom: 7px; }
+  .p-btn-group {
+    display: flex; background: #f3f3f6; border: 1px solid #e2e2ea;
+    border-radius: 10px; padding: 3px; gap: 2px;
+  }
+  .p-btn {
+    flex: 1; padding: 7px 0; border: none; border-radius: 7px;
+    background: transparent; color: #8b8b9e;
+    font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  }
+  .p-btn.active { background: #16a34a; color: #fff; }
+
+  /* Payment day section */
+  .pay-section { display: flex; flex-direction: column; gap: 7px; }
+  .pay-row {
+    display: flex; align-items: center; gap: 8px;
+    background: #f3f3f6; border: 1px solid #e2e2ea;
+    border-radius: 10px; padding: 9px 12px;
+  }
+  .pay-text { font-size: 12px; color: #8b8b9e; }
+  .pay-input {
+    width: 52px; padding: 4px 8px;
+    background: #fff; border: 1px solid #16a34a;
+    border-radius: 7px; color: #18181b;
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500;
+    text-align: center;
+  }
+
+  .p-actions { display: flex; gap: 8px; }
+  .p-copy {
+    flex: 1; padding: 11px; background: #16a34a; color: #fff;
+    border: none; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .p-reset {
+    padding: 11px 16px; background: #f3f3f6; color: #8b8b9e;
+    border: 1px solid #e2e2ea; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+  }
+  .p-donate {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 9px; border: 1px solid #e2e2ea; border-radius: 10px;
+    color: #8b8b9e; font-size: 11px;
+  }
+</style>
+</head>
+<body>
+  <div class="layout">
+    <div class="copy">
+      <div class="badge">✦ New — Payment Mode</div>
+      <h1 class="headline">Recurring<br>payments, <span>automated.</span></h1>
+      <p class="sub">Pick any day of the month and get every payment date across your date range — perfect for invoices, subscriptions, and billing cycles.</p>
+      <div class="examples">
+        <div class="example">
+          <div class="ex-day">1st</div>
+          <div class="ex-info">
+            <div class="ex-label">Monthly rent or salary</div>
+            <div class="ex-dates">Jan 1 · Feb 1 · Mar 1 · Apr 1 · May 1 · Jun 1...</div>
+          </div>
+        </div>
+        <div class="example">
+          <div class="ex-day">15th</div>
+          <div class="ex-info">
+            <div class="ex-label">Mid-month billing</div>
+            <div class="ex-dates">Jan 15 · Feb 15 · Mar 15 · Apr 15 · May 15 · Jun 15...</div>
+          </div>
+        </div>
+        <div class="example">
+          <div class="ex-day">28th</div>
+          <div class="ex-info">
+            <div class="ex-label">End-of-month invoices</div>
+            <div class="ex-dates">Jan 28 · Feb 28 · Mar 28 · Apr 28 · May 28 · Jun 28...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="popup">
+      <div class="p-header">
+        <div class="p-logo-row">
+          <div class="p-logo-icon">N</div>
+          <div>
+            <div class="p-logo-text">Date AutoFiller</div>
+            <div class="p-version">v1.1.0 · Notion</div>
+          </div>
+        </div>
+        <div class="p-theme-btn">☀️</div>
+      </div>
+      <div class="p-main">
+        <div>
+          <div class="p-label">Quick Range</div>
+          <div class="p-btn-group">
+            <button class="p-btn">Week</button>
+            <button class="p-btn">Month</button>
+            <button class="p-btn">Year</button>
+            <button class="p-btn active">Pay</button>
+          </div>
+        </div>
+        <div class="pay-section">
+          <div class="p-label">Payment day of month</div>
+          <div class="pay-row">
+            <span class="pay-text">Every</span>
+            <div class="pay-input">15</div>
+            <span class="pay-text">of each month</span>
+          </div>
+        </div>
+        <div>
+          <div class="p-label">Exclude Days</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:4px;">
+            <div style="display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;background:#f3f3f6;border:1px solid #e2e2ea;color:#8b8b9e;font-size:9px;text-transform:uppercase;">Su</div>
+            <div style="display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;background:#f3f3f6;border:1px solid #e2e2ea;color:#8b8b9e;font-size:9px;text-transform:uppercase;">Mo</div>
+            <div style="display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;background:#f3f3f6;border:1px solid #e2e2ea;color:#8b8b9e;font-size:9px;text-transform:uppercase;">Tu</div>
+            <div style="display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;background:#f3f3f6;border:1px solid #e2e2ea;color:#8b8b9e;font-size:9px;text-transform:uppercase;">We</div>
+            <div style="display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;background:#f3f3f6;border:1px solid #e2e2ea;color:#8b8b9e;font-size:9px;text-transform:uppercase;">Th</div>
+            <div style="display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;background:#f3f3f6;border:1px solid #e2e2ea;color:#8b8b9e;font-size:9px;text-transform:uppercase;">Fr</div>
+            <div style="display:flex;align-items:center;justify-content:center;height:32px;border-radius:7px;background:#f3f3f6;border:1px solid #e2e2ea;color:#8b8b9e;font-size:9px;text-transform:uppercase;">Sa</div>
+          </div>
+        </div>
+        <div class="p-actions">
+          <button class="p-copy">⎘ Copy Dates</button>
+          <button class="p-reset">Reset</button>
+        </div>
+        <div class="p-donate">☕ Buy me a coffee</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

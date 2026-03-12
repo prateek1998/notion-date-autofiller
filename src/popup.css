@@ -1,0 +1,498 @@
+:root {
+  --bg: #ffffff;
+  --surface: #f3f3f6;
+  --surface-2: #eaeaee;
+  --border: #e2e2ea;
+  --border-hover: #c4c4d4;
+  --accent: #16a34a;
+  --accent-dark: #ffffff;
+  --text: #18181b;
+  --text-muted: #8b8b9e;
+  --text-dim: #d0d0dc;
+  --danger: #e03a50;
+  --danger-dim: rgba(224, 58, 80, 0.08);
+  --gold: #c47d0e;
+  --gold-dim: rgba(196, 125, 14, 0.07);
+  --radius: 10px;
+  --radius-sm: 7px;
+}
+
+[data-theme="dark"] {
+  --bg: #0c0c0e;
+  --surface: #16161a;
+  --surface-2: #1e1e24;
+  --border: #252530;
+  --border-hover: #3a3a4a;
+  --text: #ececf0;
+  --text-muted: #5a5a70;
+  --text-dim: #2e2e3e;
+  --danger-dim: rgba(224, 58, 80, 0.15);
+  --gold-dim: rgba(196, 125, 14, 0.1);
+}
+
+[data-theme="dark"] .date-field input[type="date"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 360px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── HEADER ─────────────────────────────── */
+
+header {
+  padding: 15px 18px 13px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, rgba(22, 163, 74, 0.15) 60%, transparent 100%);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.logo-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+h1.logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+.version {
+  display: block;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+  margin-top: 1px;
+}
+
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.12s;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  border-color: var(--border-hover);
+}
+
+/* Light mode: show sun, hide moon */
+.theme-icon-moon { display: none; }
+.theme-icon-sun  { display: flex; }
+
+/* Dark mode: show moon, hide sun */
+[data-theme="dark"] .theme-icon-sun  { display: none; }
+[data-theme="dark"] .theme-icon-moon { display: flex; }
+
+/* ─── MAIN ────────────────────────────────── */
+
+main {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* ─── SECTION ─────────────────────────────── */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.section-label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── RANGE BUTTONS ───────────────────────── */
+
+.btn-group {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3px;
+  gap: 2px;
+}
+
+.range-btn {
+  flex: 1;
+  padding: 7px 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.12s ease;
+  letter-spacing: 0.2px;
+}
+
+.range-btn:hover:not(.active) {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.range-btn.active {
+  background: var(--accent);
+  color: var(--accent-dark);
+}
+
+/* ─── PAY BUTTON ─────────────────────────── */
+
+.range-btn-pay.active {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+/* ─── PAYMENT DAY PICKER ─────────────────── */
+
+.payment-day-section {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.payment-day-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 9px 12px;
+}
+
+.payment-day-prefix,
+.payment-day-suffix {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.payment-day-input {
+  width: 52px;
+  padding: 4px 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.12s;
+  -moz-appearance: textfield;
+}
+
+.payment-day-input::-webkit-inner-spin-button,
+.payment-day-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+
+.payment-day-input:focus {
+  border-color: #16a34a;
+}
+
+/* ─── DATE INPUTS ─────────────────────────── */
+
+.date-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.date-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.date-field label {
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.date-field input[type="date"] {
+  width: 100%;
+  padding: 9px 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.12s;
+  color-scheme: light;
+  cursor: pointer;
+}
+
+.date-field input[type="date"]:hover {
+  border-color: var(--border-hover);
+}
+
+.date-field input[type="date"]:focus {
+  border-color: var(--accent);
+}
+
+.date-divider {
+  color: var(--text-dim);
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ─── DAY TOGGLES ─────────────────────────── */
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.day-toggle {
+  position: relative;
+  cursor: pointer;
+}
+
+.day-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.day-toggle span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  transition: all 0.12s;
+  user-select: none;
+}
+
+.day-toggle:hover span {
+  border-color: var(--border-hover);
+  color: var(--text);
+}
+
+.day-toggle input:checked + span {
+  background: var(--danger-dim);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* ─── ACTION BUTTONS ──────────────────────── */
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-copy {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 11px;
+  background: var(--accent);
+  color: var(--accent-dark);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.12s;
+  letter-spacing: 0.2px;
+}
+
+.btn-copy:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.25);
+}
+
+.btn-copy:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+  box-shadow: none;
+}
+
+.btn-reset {
+  padding: 11px 16px;
+  background: var(--surface);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.12s;
+  letter-spacing: 0.2px;
+}
+
+.btn-reset:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: var(--danger-dim);
+}
+
+/* ─── DONATE ──────────────────────────────── */
+
+.donate-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  transition: all 0.12s;
+}
+
+.donate-link:hover {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: var(--gold-dim);
+}
+
+.donate-icon {
+  font-size: 13px;
+}
+
+/* ─── TOAST ───────────────────────────────── */
+
+.toast {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface-2);
+  border: 1px solid var(--accent);
+  color: var(--text);
+  padding: 9px 14px;
+  border-radius: var(--radius);
+  display: none;
+  align-items: center;
+  gap: 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  z-index: 100;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.10), 0 0 0 1px rgba(24, 24, 27, 0.06);
+}
+
+.toast.show {
+  display: flex;
+}
+
+.toast-icon {
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 10px;
+  padding: 0;
+  margin-left: 2px;
+  line-height: 1;
+}
+
+.toast-close:hover {
+  color: var(--text);
+}
+
+/* ─── HIDDEN LEGACY TABLE ────────────────── */
+
+table {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}

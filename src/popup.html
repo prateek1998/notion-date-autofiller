@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notion Date AutoFiller</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./popup.css" />
+</head>
+
+<body>
+  <!-- Success Toast -->
+  <div id="success-alert" class="toast">
+    <span class="toast-icon">✓</span>
+    <span>Dates copied!</span>
+    <button type="button" class="toast-close">✕</button>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-accent"></div>
+    <div class="header-left">
+      <img class="logo-icon" src="images/notion.jpg" alt="Notion Logo" />
+      <div>
+        <h1 class="logo">Date AutoFiller</h1>
+        <span class="version">v1.1.0 · Notion</span>
+      </div>
+    </div>
+    <button id="themeToggle" type="button" class="theme-toggle" title="Toggle theme">
+      <span class="theme-icon-sun">
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <circle cx="7.5" cy="7.5" r="2.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M3.05 3.05l1.06 1.06M10.89 10.89l1.06 1.06M10.89 4.11l1.06-1.06M3.05 11.95l1.06-1.06" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="theme-icon-moon">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M12 8.5A5.5 5.5 0 015.5 2a5.5 5.5 0 100 10A5.5 5.5 0 0012 8.5z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+    </button>
+  </header>
+
+  <!-- Main Form -->
+  <main>
+    <!-- Quick range selector -->
+    <div class="section">
+      <label class="section-label">Quick Range</label>
+      <div class="btn-group" id="datesBtnGroup" aria-label="Date range">
+        <button type="button" class="range-btn" value="week">Week</button>
+        <button type="button" class="range-btn active" value="month">Month</button>
+        <button type="button" class="range-btn" value="year">Year</button>
+        <button type="button" class="range-btn range-btn-pay" value="pay">Pay</button>
+      </div>
+    </div>
+
+    <!-- Payment day picker (shown only in Pay mode) -->
+    <div id="paymentDaySection" class="payment-day-section" style="display:none;">
+      <label class="section-label" for="paymentDay">Payment day of month</label>
+      <div class="payment-day-row">
+        <span class="payment-day-prefix">Every</span>
+        <input type="number" id="paymentDay" class="payment-day-input" min="1" max="31" value="1">
+        <span class="payment-day-suffix">of each month</span>
+      </div>
+    </div>
+
+    <!-- Date inputs -->
+    <div class="date-row">
+      <div class="date-field">
+        <label for="startDate">Start</label>
+        <input type="date" id="startDate">
+      </div>
+      <div class="date-divider">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="date-field">
+        <label for="endDate">End</label>
+        <input type="date" id="endDate">
+      </div>
+    </div>
+
+    <!-- Exclude days -->
+    <div class="section">
+      <label class="section-label">Exclude Days</label>
+      <div class="days-grid">
+        <label class="day-toggle">
+          <input class="form-check-input exclude-day" type="checkbox" id="excludeSunday" value="0">
+          <span>Su</span>
+        </label>
+        <label class="day-toggle">
+          <input class="form-check-input exclude-day" type="checkbox" id="excludeMonday" value="1">
+          <span>Mo</span>
+        </label>
+        <label class="day-toggle">
+          <input class="form-check-input exclude-day" type="checkbox" id="excludeTuesday" value="2">
+          <span>Tu</span>
+        </label>
+        <label class="day-toggle">
+          <input class="form-check-input exclude-day" type="checkbox" id="excludeWednesday" value="3">
+          <span>We</span>
+        </label>
+        <label class="day-toggle">
+          <input class="form-check-input exclude-day" type="checkbox" id="excludeThursday" value="4">
+          <span>Th</span>
+        </label>
+        <label class="day-toggle">
+          <input class="form-check-input exclude-day" type="checkbox" id="excludeFriday" value="5">
+          <span>Fr</span>
+        </label>
+        <label class="day-toggle">
+          <input class="form-check-input exclude-day" type="checkbox" id="excludeSaturday" value="6">
+          <span>Sa</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="actions">
+      <button id="btnSubmit" type="button" class="btn-copy">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <rect x="1" y="4" width="8" height="9" rx="1.5" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M4 4V2.5A1.5 1.5 0 015.5 1h7A1.5 1.5 0 0114 2.5v7A1.5 1.5 0 0112.5 11H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        Copy Dates
+      </button>
+      <button id="btnReset" type="button" class="btn-reset">Reset</button>
+    </div>
+
+    <!-- Donate -->
+    <a target="_blank" href="https://www.buymeacoffee.com/pratiiksaini" class="donate-link">
+      <span class="donate-icon">☕</span>
+      Buy me a coffee
+    </a>
+  </main>
+
+  <script src="./scripts/jquery.min.js"></script>
+  <script src="./scripts/popup.js"></script>
+</body>
+
+</html>

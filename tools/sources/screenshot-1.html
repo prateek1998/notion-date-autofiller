@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Screenshot 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px; height: 800px; overflow: hidden;
+    background: #f0fdf4;
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  /* Background blobs */
+  body::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(22,163,74,0.12) 0%, transparent 70%);
+    top: -100px; left: -100px;
+  }
+  body::after {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(22,163,74,0.08) 0%, transparent 70%);
+    bottom: -80px; right: -80px;
+  }
+  .layout {
+    display: flex; align-items: center; gap: 80px;
+    position: relative; z-index: 1;
+  }
+  /* Left copy */
+  .copy { max-width: 380px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #dcfce7; color: #16a34a;
+    font-size: 11px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; padding: 5px 12px;
+    border-radius: 99px; margin-bottom: 24px;
+    border: 1px solid #bbf7d0;
+  }
+  .headline {
+    font-family: 'Syne', sans-serif;
+    font-size: 44px; font-weight: 800; line-height: 1.1;
+    color: #18181b; letter-spacing: -1px; margin-bottom: 18px;
+  }
+  .headline span { color: #16a34a; }
+  .sub {
+    font-size: 14px; color: #52525b; line-height: 1.7;
+    margin-bottom: 32px;
+  }
+  .features { display: flex; flex-direction: column; gap: 10px; }
+  .feat {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px; color: #3f3f46;
+  }
+  .feat-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #16a34a; flex-shrink: 0;
+  }
+
+  /* Popup mockup */
+  .popup {
+    width: 360px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .p-header {
+    padding: 15px 18px 13px;
+    border-bottom: 1px solid #e2e2ea;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative;
+  }
+  .p-header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #16a34a, rgba(22,163,74,0.1));
+  }
+  .p-logo-row { display: flex; align-items: center; gap: 10px; }
+  .p-logo-icon {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: #18181b; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 16px;
+  }
+  .p-logo-text { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; color: #18181b; }
+  .p-version { font-size: 10px; color: #8b8b9e; margin-top: 1px; }
+  .p-theme-btn {
+    width: 32px; height: 32px; border-radius: 7px;
+    border: 1px solid #e2e2ea; background: #f3f3f6;
+    display: flex; align-items: center; justify-content: center;
+    color: #8b8b9e; font-size: 14px;
+  }
+  .p-main { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 15px; }
+  .p-label { font-size: 9px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #8b8b9e; margin-bottom: 7px; }
+  .p-btn-group {
+    display: flex; background: #f3f3f6; border: 1px solid #e2e2ea;
+    border-radius: 10px; padding: 3px; gap: 2px;
+  }
+  .p-btn {
+    flex: 1; padding: 7px 0; border: none; border-radius: 7px;
+    background: transparent; color: #8b8b9e;
+    font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  }
+  .p-btn.active { background: #16a34a; color: #fff; }
+  .p-date-row { display: flex; align-items: flex-end; gap: 6px; }
+  .p-date-field { flex: 1; }
+  .p-date-input {
+    width: 100%; padding: 9px 10px;
+    background: #f3f3f6; border: 1px solid #e2e2ea;
+    border-radius: 10px; color: #18181b;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  }
+  .p-arrow { color: #d0d0dc; padding-bottom: 10px; font-size: 16px; }
+  .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .day-pill {
+    display: flex; align-items: center; justify-content: center;
+    height: 32px; border-radius: 7px;
+    background: #f3f3f6; border: 1px solid #e2e2ea;
+    color: #8b8b9e; font-size: 9px; font-weight: 500; text-transform: uppercase;
+  }
+  .day-pill.excluded { background: rgba(224,58,80,0.08); border-color: #e03a50; color: #e03a50; }
+  .p-actions { display: flex; gap: 8px; }
+  .p-copy {
+    flex: 1; padding: 11px; background: #16a34a; color: #fff;
+    border: none; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .p-reset {
+    padding: 11px 16px; background: #f3f3f6; color: #8b8b9e;
+    border: 1px solid #e2e2ea; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+  }
+  .p-donate {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 9px; border: 1px solid #e2e2ea; border-radius: 10px;
+    color: #8b8b9e; font-size: 11px;
+  }
+</style>
+</head>
+<body>
+  <div class="layout">
+    <div class="copy">
+      <div class="badge">✦ v1.1.0 — New Features</div>
+      <h1 class="headline">Notion dates,<br><span>done in seconds.</span></h1>
+      <p class="sub">Select a date range, click Copy, and paste directly into your Notion database. No more manual entry.</p>
+      <div class="features">
+        <div class="feat"><div class="feat-dot"></div>Weekly, Monthly & Yearly quick ranges</div>
+        <div class="feat"><div class="feat-dot"></div>Exclude specific days of the week</div>
+        <div class="feat"><div class="feat-dot"></div>Copy 300+ dates with no limits</div>
+        <div class="feat"><div class="feat-dot"></div>Light & Dark mode included</div>
+      </div>
+    </div>
+
+    <div class="popup">
+      <div class="p-header">
+        <div class="p-logo-row">
+          <div class="p-logo-icon">N</div>
+          <div>
+            <div class="p-logo-text">Date AutoFiller</div>
+            <div class="p-version">v1.1.0 · Notion</div>
+          </div>
+        </div>
+        <div class="p-theme-btn">☀️</div>
+      </div>
+      <div class="p-main">
+        <div>
+          <div class="p-label">Quick Range</div>
+          <div class="p-btn-group">
+            <button class="p-btn">Week</button>
+            <button class="p-btn active">Month</button>
+            <button class="p-btn">Year</button>
+            <button class="p-btn">Pay</button>
+          </div>
+        </div>
+        <div class="p-date-row">
+          <div class="p-date-field">
+            <div class="p-label">Start</div>
+            <div class="p-date-input">03/01/2026</div>
+          </div>
+          <div class="p-arrow">→</div>
+          <div class="p-date-field">
+            <div class="p-label">End</div>
+            <div class="p-date-input">03/31/2026</div>
+          </div>
+        </div>
+        <div>
+          <div class="p-label">Exclude Days</div>
+          <div class="days-grid">
+            <div class="day-pill excluded">Su</div>
+            <div class="day-pill">Mo</div>
+            <div class="day-pill">Tu</div>
+            <div class="day-pill">We</div>
+            <div class="day-pill">Th</div>
+            <div class="day-pill">Fr</div>
+            <div class="day-pill excluded">Sa</div>
+          </div>
+        </div>
+        <div class="p-actions">
+          <button class="p-copy">⎘ Copy Dates</button>
+          <button class="p-reset">Reset</button>
+        </div>
+        <div class="p-donate">☕ Buy me a coffee</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

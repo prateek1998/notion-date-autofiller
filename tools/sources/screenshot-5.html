@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Screenshot 5 – Full Year</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px; height: 800px; overflow: hidden;
+    background: #0a0a0c;
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  body::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 800px 500px at 50% 50%, rgba(22,163,74,0.06) 0%, transparent 70%);
+  }
+  .layout {
+    display: flex; flex-direction: column; align-items: center; gap: 48px;
+    position: relative; z-index: 1; text-align: center;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(22,163,74,0.12); color: #4ade80; font-size: 11px;
+    font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 99px; border: 1px solid rgba(74,222,128,0.2);
+  }
+  .headline {
+    font-family: 'Syne', sans-serif;
+    font-size: 56px; font-weight: 800; line-height: 1.05;
+    color: #ececf0; letter-spacing: -2px; margin-top: 16px;
+  }
+  .headline span { color: #4ade80; }
+  .sub { font-size: 15px; color: #52525b; line-height: 1.6; max-width: 520px; margin-top: 14px; }
+
+  /* Stats row */
+  .stats { display: flex; gap: 24px; }
+  .stat {
+    background: #16161a; border: 1px solid #252530;
+    border-radius: 12px; padding: 20px 28px; text-align: center;
+    min-width: 140px;
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800;
+    color: #4ade80; line-height: 1;
+  }
+  .stat-label { font-size: 11px; color: #5a5a70; margin-top: 6px; letter-spacing: 0.5px; }
+
+  /* Date grid preview */
+  .date-grid-wrap {
+    background: #16161a; border: 1px solid #252530;
+    border-radius: 14px; padding: 20px 24px; width: 760px;
+  }
+  .grid-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .grid-title { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #ececf0; }
+  .grid-badge {
+    background: rgba(74,222,128,0.1); color: #4ade80;
+    font-size: 10px; padding: 3px 10px; border-radius: 99px;
+    border: 1px solid rgba(74,222,128,0.2);
+  }
+  .date-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; }
+  .month-col { display: flex; flex-direction: column; gap: 3px; }
+  .month-name {
+    font-size: 8px; font-weight: 500; letter-spacing: 0.8px;
+    text-transform: uppercase; color: #5a5a70; text-align: center;
+    margin-bottom: 4px;
+  }
+  .date-dot {
+    height: 18px; border-radius: 4px; background: #252530;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; color: #5a5a70;
+  }
+  .date-dot.active { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .date-dot.pay { background: rgba(74,222,128,0.5); color: #0a0a0c; font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="layout">
+    <div>
+      <div class="badge">✦ No Limits</div>
+      <div class="headline">Copy an entire year.<br><span>All 261 dates.</span></div>
+      <div class="sub">Full-year support with zero truncation. Whether it's 30 dates or 365, every single date lands in your clipboard — ready to paste.</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">365</div>
+        <div class="stat-label">Dates per year</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">261</div>
+        <div class="stat-label">Weekdays only</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">12</div>
+        <div class="stat-label">Payment dates</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Empty rows</div>
+      </div>
+    </div>
+
+    <div class="date-grid-wrap">
+      <div class="grid-header">
+        <div class="grid-title">2026 — All weekdays</div>
+        <div class="grid-badge">261 dates copied ✓</div>
+      </div>
+      <div class="date-grid" id="grid"></div>
+    </div>
+  </div>
+
+  <script>
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const days = [31,28,31,30,31,30,31,31,30,31,30,31];
+    const grid = document.getElementById('grid');
+    months.forEach((m, mi) => {
+      const col = document.createElement('div');
+      col.className = 'month-col';
+      const name = document.createElement('div');
+      name.className = 'month-name';
+      name.textContent = m;
+      col.appendChild(name);
+      let shown = 0;
+      for (let d = 1; d <= days[mi] && shown < 10; d++) {
+        const day = new Date(2026, mi, d).getDay();
+        if (day !== 0 && day !== 6) {
+          const dot = document.createElement('div');
+          dot.className = 'date-dot active';
+          dot.textContent = d;
+          col.appendChild(dot);
+          shown++;
+        }
+      }
+      // filler dots
+      while (shown < 10) {
+        const dot = document.createElement('div');
+        dot.className = 'date-dot';
+        dot.textContent = '·';
+        col.appendChild(dot);
+        shown++;
+      }
+      grid.appendChild(col);
+    });
+  </script>
+</body>
+</html>

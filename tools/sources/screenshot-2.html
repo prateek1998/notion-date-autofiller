@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1280">
+<title>Screenshot 2 – Dark Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1280px; height: 800px; overflow: hidden;
+    background: #0a0a0c;
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(22,163,74,0.07) 0%, transparent 65%);
+    top: -200px; right: -100px;
+  }
+  body::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(22,163,74,0.05) 0%, transparent 65%);
+    bottom: -100px; left: 100px;
+  }
+  .layout {
+    display: flex; align-items: center; gap: 80px;
+    position: relative; z-index: 1;
+  }
+  .popup {
+    width: 360px;
+    background: #0c0c0e;
+    border-radius: 14px;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .p-header {
+    padding: 15px 18px 13px;
+    border-bottom: 1px solid #252530;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative;
+  }
+  .p-header::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, #16a34a, rgba(22,163,74,0.1));
+  }
+  .p-logo-row { display: flex; align-items: center; gap: 10px; }
+  .p-logo-icon {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: #ececf0; display: flex; align-items: center; justify-content: center;
+    color: #18181b; font-size: 16px; font-weight: 800; font-family: 'Syne', sans-serif;
+  }
+  .p-logo-text { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 800; color: #ececf0; }
+  .p-version { font-size: 10px; color: #5a5a70; margin-top: 1px; }
+  .p-theme-btn {
+    width: 32px; height: 32px; border-radius: 7px;
+    border: 1px solid #252530; background: #16161a;
+    display: flex; align-items: center; justify-content: center;
+    color: #5a5a70; font-size: 13px;
+  }
+  .p-main { padding: 16px 18px 18px; display: flex; flex-direction: column; gap: 15px; }
+  .p-label { font-size: 9px; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase; color: #5a5a70; margin-bottom: 7px; }
+  .p-btn-group {
+    display: flex; background: #16161a; border: 1px solid #252530;
+    border-radius: 10px; padding: 3px; gap: 2px;
+  }
+  .p-btn {
+    flex: 1; padding: 7px 0; border: none; border-radius: 7px;
+    background: transparent; color: #5a5a70;
+    font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+  }
+  .p-btn.active { background: #16a34a; color: #fff; }
+  .p-date-row { display: flex; align-items: flex-end; gap: 6px; }
+  .p-date-field { flex: 1; }
+  .p-date-input {
+    width: 100%; padding: 9px 10px;
+    background: #16161a; border: 1px solid #252530;
+    border-radius: 10px; color: #ececf0;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  }
+  .p-arrow { color: #2e2e3e; padding-bottom: 10px; font-size: 16px; }
+  .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .day-pill {
+    display: flex; align-items: center; justify-content: center;
+    height: 32px; border-radius: 7px;
+    background: #16161a; border: 1px solid #252530;
+    color: #5a5a70; font-size: 9px; font-weight: 500; text-transform: uppercase;
+  }
+  .day-pill.excluded { background: rgba(224,58,80,0.1); border-color: #e03a50; color: #e03a50; }
+  .p-actions { display: flex; gap: 8px; }
+  .p-copy {
+    flex: 1; padding: 11px; background: #16a34a; color: #fff;
+    border: none; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+  }
+  .p-reset {
+    padding: 11px 16px; background: #16161a; color: #5a5a70;
+    border: 1px solid #252530; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+  }
+  .p-donate {
+    display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 9px; border: 1px solid #252530; border-radius: 10px;
+    color: #5a5a70; font-size: 11px;
+  }
+
+  /* Right copy */
+  .copy { max-width: 400px; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(22,163,74,0.12); color: #4ade80;
+    font-size: 11px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase; padding: 5px 12px;
+    border-radius: 99px; margin-bottom: 24px;
+    border: 1px solid rgba(74,222,128,0.2);
+  }
+  .headline {
+    font-family: 'Syne', sans-serif;
+    font-size: 44px; font-weight: 800; line-height: 1.1;
+    color: #ececf0; letter-spacing: -1px; margin-bottom: 18px;
+  }
+  .headline span { color: #4ade80; }
+  .sub { font-size: 14px; color: #71717a; line-height: 1.7; margin-bottom: 32px; }
+  .toggle-demo {
+    display: flex; align-items: center; gap: 14px;
+    background: #16161a; border: 1px solid #252530;
+    border-radius: 12px; padding: 16px 20px;
+  }
+  .toggle-icon { font-size: 28px; }
+  .toggle-text { font-family: 'Syne', sans-serif; }
+  .toggle-title { font-size: 14px; font-weight: 700; color: #ececf0; margin-bottom: 3px; }
+  .toggle-desc { font-size: 12px; color: #5a5a70; }
+</style>
+</head>
+<body>
+  <div class="layout">
+    <div class="popup">
+      <div class="p-header">
+        <div class="p-logo-row">
+          <div class="p-logo-icon">N</div>
+          <div>
+            <div class="p-logo-text">Date AutoFiller</div>
+            <div class="p-version">v1.1.0 · Notion</div>
+          </div>
+        </div>
+        <div class="p-theme-btn">🌙</div>
+      </div>
+      <div class="p-main">
+        <div>
+          <div class="p-label">Quick Range</div>
+          <div class="p-btn-group">
+            <button class="p-btn">Week</button>
+            <button class="p-btn active">Month</button>
+            <button class="p-btn">Year</button>
+            <button class="p-btn">Pay</button>
+          </div>
+        </div>
+        <div class="p-date-row">
+          <div class="p-date-field">
+            <div class="p-label">Start</div>
+            <div class="p-date-input">03/01/2026</div>
+          </div>
+          <div class="p-arrow">→</div>
+          <div class="p-date-field">
+            <div class="p-label">End</div>
+            <div class="p-date-input">03/31/2026</div>
+          </div>
+        </div>
+        <div>
+          <div class="p-label">Exclude Days</div>
+          <div class="days-grid">
+            <div class="day-pill excluded">Su</div>
+            <div class="day-pill">Mo</div>
+            <div class="day-pill">Tu</div>
+            <div class="day-pill">We</div>
+            <div class="day-pill">Th</div>
+            <div class="day-pill">Fr</div>
+            <div class="day-pill excluded">Sa</div>
+          </div>
+        </div>
+        <div class="p-actions">
+          <button class="p-copy">⎘ Copy Dates</button>
+          <button class="p-reset">Reset</button>
+        </div>
+        <div class="p-donate">☕ Buy me a coffee</div>
+      </div>
+    </div>
+
+    <div class="copy">
+      <div class="badge">✦ Dark Mode</div>
+      <h1 class="headline">Easy on<br>your <span>eyes.</span></h1>
+      <p class="sub">Switch between light and dark mode with one click. Your preference is remembered every time you open the extension.</p>
+      <div class="toggle-demo">
+        <div class="toggle-icon">☀️ / 🌙</div>
+        <div class="toggle-text">
+          <div class="toggle-title">One-click theme toggle</div>
+          <div class="toggle-desc">Preference saved automatically across sessions</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

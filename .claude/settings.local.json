@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version && npm --version 2>/dev/null || echo \"NOT_FOUND\")",
+      "Bash(cd \"E:/learning/notion-date-autofiller\" && npm install --save-dev puppeteer-core 2>&1 | tail -5)",
+      "Bash(cd \"E:/learning/notion-date-autofiller/screenshots\" && node capture.js)",
+      "Bash(ffmpeg -version 2>/dev/null | head -1 || echo \"NOT_FOUND\")",
+      "Bash(where ffmpeg:*)",
+      "Bash(cd \"E:/learning/notion-date-autofiller\" && npx playwright install chromium 2>&1 | tail -5)",
+      "Bash(cd \"E:/learning/notion-date-autofiller/screenshots\" && node record-video.js)",
+      "Bash(cd \"E:/learning/notion-date-autofiller\" && powershell -Command \"Compress-Archive -Path 'src\\\\*' -DestinationPath 'build\\\\notion-date-autofiller-v1.1.0.zip' -Force\" && echo \"Done\")"
+    ]
+  }
+}
