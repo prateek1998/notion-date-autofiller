@@ -6,7 +6,7 @@ Notion Date AutoFiller is the fastest way to populate date columns in your Notio
 
 Stop manually entering dates one by one. Select a range, hit Copy, and paste hundreds of dates instantly into Notion — no limits, no empty rows.
 
-![Overview](store-assets/screenshots/screenshot-1.png)
+![Overview](https://raw.githubusercontent.com/prateek1998/notion-date-autofiller/main/store-assets/screenshots/screenshot-1.png)
 
 ✨ What's New in v1.1.0:
 ✔️ Payment Mode — Generate recurring monthly payment dates (e.g. every 15th) across any range
@@ -14,13 +14,13 @@ Stop manually entering dates one by one. Select a range, hit Copy, and paste hun
 ✔️ Dark & Light mode — Remembers your preference across sessions
 ✔️ Quick ranges — Jump to Week, Month, or Year in one click
 
-![Dark Mode](store-assets/screenshots/screenshot-2.png)
+![Dark Mode](https://raw.githubusercontent.com/prateek1998/notion-date-autofiller/main/store-assets/screenshots/screenshot-2.png)
 
-![Payment Mode](store-assets/screenshots/screenshot-3.png)
+![Payment Mode](https://raw.githubusercontent.com/prateek1998/notion-date-autofiller/main/store-assets/screenshots/screenshot-3.png)
 
-![Exclude Days](store-assets/screenshots/screenshot-4.png)
+![Exclude Days](https://raw.githubusercontent.com/prateek1998/notion-date-autofiller/main/store-assets/screenshots/screenshot-4.png)
 
-![Full Year Support](store-assets/screenshots/screenshot-5.png)
+![Full Year Support](https://raw.githubusercontent.com/prateek1998/notion-date-autofiller/main/store-assets/screenshots/screenshot-5.png)
 
 ⚡ Core Features:
 ✔️ Set custom Start & End dates with ease
